@@ -9,7 +9,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Update apt repository and install required packages
 RUN apt-get update && \
-  apt-get install -y curl python3 python3-pip zsh git fzf exa sudo && \
+  apt-get install -y curl python3 python3-pip zsh git sudo && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/*
 
@@ -33,7 +33,6 @@ RUN mkdir -p /home/developer/.config/ && \
   git clone --depth 1 https://github.com/zsh-users/zsh-syntax-highlighting.git /home/developer/.config/zsh-syntax-highlighting
 
 # Copy configuration files into the developer's home directory
-# Note: These COPY commands should be adjusted if the config files are user-specific
 COPY zshrc /home/developer/.zshrc
 COPY starship.toml /home/developer/.config/starship.toml
 
