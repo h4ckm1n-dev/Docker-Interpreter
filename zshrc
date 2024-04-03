@@ -117,50 +117,6 @@ if [ -f /etc/zsh_command_not_found ]; then
     . /etc/zsh_command_not_found
 fi
 
-# Enhanced fzf History Search Widget for Zsh with Compact Design
-fzf-history-search-widget() {
-    # Initial setup for variables
-    local initial_query="" selected_command
-
-    # Use fzf with a header for the title. Adjust height for compactness.
-    selected_command=$(cat "${HOME}/.zsh_history" | \
-        awk 'NF > 1 && $0 !~ /^cd \.\.$/' | \
-        awk '!seen[$0]++' | \
-        fzf --query="$initial_query" \
-            --print-query \
-            --header='🔍 FZF History Search:' \
-            --height=20% --layout=reverse)
-
-    # Extract the selected command, excluding the query
-    selected_command=$(echo "$selected_command" | tail -n +2)
-
-    # If a command has been selected, update the command line buffer
-    if [[ -n $selected_command ]]; then
-        LBUFFER="$selected_command"
-    fi
-
-    # Keep the interface clean
-    zle reset-prompt
-}
-
-# Register the widget with zle and bind it to a key
-zle -N fzf-history-search-widget
-bindkey '^R' fzf-history-search-widget
-
-# Function to capture the last command executed
-zsh_preexec() {
-    zsh_last_command="$1"
-}
-
-# Ensure bat and nvim are available
-if (( $+commands[bat] )) && (( $+commands[nvim] )); then
-    alias fz='find . ! -path "*/.*" | fzf --layout=reverse --height=95% --border=rounded --color=dark --preview="bat -p --color=always --line-range :500 {}" --preview-window=right:50%:wrap --ansi | xargs -ro nvim'
-fi
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
 # Personal PATH
 eval "$(starship init zsh)"
 source ~/.config/zsh-autosuggestions/zsh-autosuggestions.zsh
