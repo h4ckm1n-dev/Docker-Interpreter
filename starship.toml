@@ -114,3 +114,11 @@ disabled = true
 [golang]
 format = "via [ $version]($style) "
 disabled = true
+
+[aws]
+format = '󰀴 [$profile](bold yellow) '
+disabled = true
+
+[git_metrics]
+format = '󰈙 [$commits_behind\($commits_ahead\)]($style) '
+disabled = true
