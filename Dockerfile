@@ -17,7 +17,7 @@ RUN apt-get update && \
 RUN curl -sS https://starship.rs/install.sh | sh -s -- -y
 
 # Install Open Interpreter via pip
-RUN pip3 install open-interpreter
+RUN pip3 install --no-cache-dir open-interpreter
 
 # Add a new user 'developer', give sudo privileges, and set up user environment
 RUN useradd -m -s /usr/bin/zsh developer && \
