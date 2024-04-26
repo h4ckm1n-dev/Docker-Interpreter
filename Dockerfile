@@ -1,5 +1,5 @@
 # Use an official Ubuntu as a parent image
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 
 # Set the working directory in the container
 WORKDIR /usr/src/tmp
